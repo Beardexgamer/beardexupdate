@@ -1,0 +1,11 @@
+ <!-- CPM Ad Box (Always shows 5s after page load) -->
+  <div id="cpm-ad-box">
+    <button onclick="closeAdBox()">×</button>
+
+    <!-- CPM Ad (Iframe) -->
+    <iframe 
+      src="https://www.profitableratecpm.com/t8ppzb68?key=dec5ae2c0e4e08ef65215f4ddaa99ac1" 
+      scrolling="no"
+      allow="autoplay; encrypted-media"
+    ></iframe>
+  </div>

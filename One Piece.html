@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="6a97888e-site-verification" content="3236be7fb9e7eba22cf0c57d20d00379">
+  <title>one piece- BeardexAnime</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-color: #e50914;
+      --secondary-color: #6c5ce7;
+      --background-dark: #0f0f14;
+      --card-bg: #1a1a24;
+      --text-light: #f8f8f8;
+      --text-muted: #a0a0a0;
+    }
+    
+    body {
+      background-color: var(--background-dark);
+      color: var(--text-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 4px;
+    }
+    
+    /* Hero section with gradient overlay */
+    .hero-overlay {
+      background: linear-gradient(to top, var(--background-dark) 0%, rgba(15, 15, 20, 0.8) 50%, rgba(15, 15, 20, 0.6) 100%);
+    }
+    
+    /* Episode card animations */
+    .episode-card {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .episode-card:hover {
+      transform: scale(1.05);
+      z-index: 10;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Episode preview animation */
+    .episode-thumbnail {
+      transition: opacity 0.3s ease;
+    }
+    .episode-preview {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .episode-card:hover .episode-thumbnail {
+      opacity: 0;
+    }
+    .episode-card:hover .episode-preview {
+      opacity: 1;
+    }
+    
+    /* Episode info overlay */
+    .episode-info-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+      transform: translateY(0);
+      transition: transform 0.3s ease;
+    }
+    
+    /* Play button overlay */
+    .play-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .episode-card:hover .play-overlay {
+      opacity: 1;
+    }
+    
+    /* Progress bar */
+    .progress-bar {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 5;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-color);
+    }
+    
+    /* Rating stars */
+    .star-rating {
+      color: #ffc107;
+    }
+    .star-empty {
+      color: #555;
+    }
+    
+    /* Genre tags */
+    .genre-tag {
+      background-color: rgba(108, 92, 231, 0.2);
+      border: 1px solid rgba(108, 92, 231, 0.4);
+      color: #a29bfe;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Buttons */
+    .primary-btn {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .primary-btn:hover {
+      background-color: #f40612;
+      transform: translateY(-2px);
+    }
+    .secondary-btn {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .secondary-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    /* Episode badge */
+    .episode-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 5;
+    }
+    
+    /* New episode badge */
+    .new-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 5;
+    }
+    
+    /* Duration badge */
+    .duration-badge {
+      position: absolute;
+      bottom: 40px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      z-index: 5;
+    }
+    
+    /* Section headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      position: relative;
+      padding-left: 0.75rem;
+    }
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    /* View all link */
+    .view-all {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+    .view-all:hover {
+      color: var(--primary-color);
+    }
+    .view-all i {
+      margin-left: 0.25rem;
+    }
+    
+    /* Info pills */
+    .info-pill {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    .info-pill i {
+      margin-right: 0.5rem;
+      color: var(--secondary-color);
+    }
+    
+    /* Navigation */
+    .nav-link {
+      color: var(--text-muted);
+      transition: color 0.2s;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-light);
+    }
+    .nav-link.active {
+      position: relative;
+    }
+    .nav-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 2px;
+      background-color: var(--primary-color);
+      border-radius: 1px;
+    }
+    
+    /* Search results */
+    .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--card-bg);
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+    }
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background-color 0.2s;
+    }
+    .search-result-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    .search-result-item img {
+      width: 40px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 1rem;
+    }
+    
+    /* Screenshots section */
+    .screenshots-section {
+      position: relative;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    .screenshot-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, var(--background-dark) 100%);
+      pointer-events: none;
+    }
+    .screenshot-content {
+      position: relative;
+      z-index: 10;
+      padding: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="bg-opacity-90 bg-black backdrop-filter backdrop-blur-md fixed top-0 w-full z-50">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-8">
+          <a href="index.html" class="text-2xl font-bold text-red-600">BeardexAnime</a>
+          <nav class="hidden md:flex space-x-2">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Genres</a>
+            <a href="#" class="nav-link active">Popular</a>
+            <a href="#" class="nav-link">New Releases</a>
+          </nav>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <div class="relative hidden md:block">
+            <input type="text" id="searchInput" placeholder="Search anime..." class="bg-gray-800 bg-opacity-70 text-sm rounded-full py-1 px-4 pl-8 focus:outline-none focus:ring-1 focus:ring-red-500 w-48">
+            <i class="fas fa-search absolute left-3 top-2 text-gray-400 text-sm"></i>
+            
+            <!-- Search Results Dropdown -->
+            <div id="searchResults" class="search-results">
+              <!-- Search results will be populated here by JavaScript -->
+            </div>
+          </div>
+          <button class="text-gray-300 hover:text-white">
+            <i class="far fa-bell"></i>
+          </button>
+          <div class="relative">
+            <img src="https://api.dicebear.com/6.x/bottts/svg?seed=anime" alt="Profile" class="w-8 h-8 rounded-full">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- One Piece Details Banner Section -->
+<section class="relative min-h-[60vh] bg-cover bg-center" style="background-image: url('https://vz-ef028a43-e92.b-cdn.net/92e3f94a-bab2-4174-b25f-4e0568abe5a6/thumbnail_08b6769a.jpg');">
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center text-white px-4 py-16">
+    <img src="image/one piece grid trend grid index.jpeg" alt="One Piece" class="mx-auto w-40 mb-4 rounded shadow-md">
+    <h2 class="text-3xl md:text-4xl font-bold mb-2">One Piece</h2>
+    <p class="text-yellow-400 text-lg font-semibold mb-4"><i class="fas fa-star mr-1"></i> 8.7/10</p>
+    <div class="mb-4">
+      <span class="genre-tag">Fantasy</span>
+      <span class="genre-tag">Adventure</span>
+      <span class="genre-tag">Comedy</span>
+      <span class="genre-tag">Magic</span>
+    </div>
+    <p class="max-w-2xl mx-auto text-gray-300">
+      Monkey D. Luffy refuses to let anyone or anything stand in the way of his quest to become King of the Pirates.
+      With his rubber-like stretching powers granted by the supernatural Devil Fruit, the spirited young pirate seeks
+      the legendary treasure known as the One Piece. He’ll chart a course for the treacherous waters of the Grand Line
+      and recruit a motley crew to build his Straw Hat Pirates one bond at a time. This is one captain who’ll never
+      drop anchor until he and his friends all reach their dreams!
+    </p>
+  </div>
+</section>
+    <!-- Info Pills -->
+    <section class="py-6 bg-opacity-50 bg-black">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="info-pill">
+            <i class="far fa-calendar-alt"></i>
+            <div>
+              <div class="text-xs text-gray-400">Airing</div>
+              <div class="text-sm">Sundays at 23:00 (JST)</div>
+            </div>
+          </div>
+          <div class="info-pill">
+            <i class="fas fa-tv"></i>
+            <div>
+              <div class="text-xs text-gray-400">Status</div>
+              <div class="text-sm">Currently Airing</div>
+            </div>
+          </div>
+          <div class="info-pill">
+            <i class="fas fa-users"></i>
+            <div>
+              <div class="text-xs text-gray-400">Popularity</div>
+              <div class="text-sm">1.2M fans</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- Episodes Section -->
+    <section class="py-8">
+      <div class="container mx-auto px-4">
+        <div class="section-header">
+          <h2 class="section-title">Episodes</h2>
+          <a href="#" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Episode 1 -->
+          <a href="https://iframe.mediadelivery.net/embed/422400/92e3f94a-bab2-4174-b25f-4e0568abe5a6" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-video">
+              <!-- Static Thumbnail -->
+              <img src="https://vz-ef028a43-e92.b-cdn.net/92e3f94a-bab2-4174-b25f-4e0568abe5a6/thumbnail.jpg" alt="Episode 1" class="episode-thumbnail w-full h-full object-cover">
+              
+              <!-- Animated Preview (WebP) -->
+              <img src="https://vz-ef028a43-e92.b-cdn.net/92e3f94a-bab2-4174-b25f-4e0568abe5a6/preview.webp" alt="Episode 1 Preview" class="episode-preview">
+              
+              <!-- Episode Badge -->
+              <div class="episode-badge">EP 1</div>
+              
+              <!-- Duration Badge -->
+              <div class="duration-badge">24:38</div>
+              
+              <!-- Play Overlay -->
+              <div class="play-overlay">
+                <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              
+              <!-- Progress Bar -->
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%;"></div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold">Episode 1</h3>
+              <p class="text-gray-400 text-sm">One Piece</p>
+            </div>
+          </a>
+          
+          <!-- Episode 2 -->
+          <a href="https://iframe.mediadelivery.net/play/422400/798a16f4-390d-4b30-8dd0-b0d13d9c05e2" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-video">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/798a16f4-390d-4b30-8dd0-b0d13d9c05e2/thumbnail.jpg" alt="Episode 2" class="episode-thumbnail w-full h-full object-cover">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/798a16f4-390d-4b30-8dd0-b0d13d9c05e2/preview.webp" alt="Episode 2 Preview" class="episode-preview">
+              <div class="episode-badge">EP 2</div>
+              <div class="duration-badge">24:15</div>
+              <div class="play-overlay">
+                <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 45%;"></div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold">Episode 2</h3>
+              <p class="text-gray-400 text-sm">One Piece</p>
+            </div>
+          </a>
+          
+          <!-- Episode 3 -->
+          <a href="https://iframe.mediadelivery.net/play/422400/29e71fee-9ebb-48b8-8b56-3a04e9ce65c0" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-video">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/29e71fee-9ebb-48b8-8b56-3a04e9ce65c0/thumbnail.jpg" alt="Episode 3" class="episode-thumbnail w-full h-full object-cover">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/29e71fee-9ebb-48b8-8b56-3a04e9ce65c0/preview.webp" alt="Episode 3 Preview" class="episode-preview">
+              <div class="episode-badge">EP 3</div>
+              <div class="duration-badge">24:15</div>
+              <div class="play-overlay">
+                <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 20%;"></div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold">Episode 3</h3>
+              <p class="text-gray-400 text-sm">One Piece</p>
+            </div>
+          </a>
+          
+          <!-- Episode 4 -->
+          <a href="https://iframe.mediadelivery.net/play/422400/42a74362-f8ec-40b4-8c9a-a64d80c185fe" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-video">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/42a74362-f8ec-40b4-8c9a-a64d80c185fe/thumbnail.jpg" alt="Episode 4" class="episode-thumbnail w-full h-full object-cover">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/42a74362-f8ec-40b4-8c9a-a64d80c185fe/preview.webp" alt="Episode 4 Preview" class="episode-preview">
+              <div class="episode-badge">EP 4</div>
+              <div class="duration-badge">24:15</div>
+              <div class="play-overlay">
+                <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold">Episode 4</h3>
+              <p class="text-gray-400 text-sm">One Piece</p>
+            </div>
+          </a>
+          
+          <!-- Episode 5 -->
+          <a href="https://iframe.mediadelivery.net/play/422400/bc45e7e9-f4df-4730-b9a5-c42c1eccc991" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-video">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/bc45e7e9-f4df-4730-b9a5-c42c1eccc991/thumbnail.jpg" alt="Episode 5" class="episode-thumbnail w-full h-full object-cover">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/bc45e7e9-f4df-4730-b9a5-c42c1eccc991/preview.webp" alt="Episode 5 Preview" class="episode-preview">
+              <div class="episode-badge">EP 5</div>
+              <div class="duration-badge">24:15</div>
+              <div class="new-badge">NEW</div>
+              <div class="play-overlay">
+                <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold">Episode 5</h3>
+              <p class="text-gray-400 text-sm">One Piece</p>
+            </div>
+          </a>
+          <a href="https://iframe.mediadelivery.net/play/422400/cb36be8f-c49d-4900-affc-0458e8c855f3" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-video">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/cb36be8f-c49d-4900-affc-0458e8c855f3/thumbnail.jpg" alt="Episode 5" class="episode-thumbnail w-full h-full object-cover">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/cb36be8f-c49d-4900-affc-0458e8c855f3/preview.webp" alt="Episode 5 Preview" class="episode-preview">
+              <div class="episode-badge">EP 6</div>
+              <div class="duration-badge">24:15</div>
+              <div class="new-badge">NEW</div>
+              <div class="play-overlay">
+                <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold">Episode 6</h3>
+              <p class="text-gray-400 text-sm">One Piece</p>
+            </div>
+          </a>
+          <a href="https://iframe.mediadelivery.net/play/422400/0b12169d-bffe-44ae-ba62-cd0b7270d320" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-video">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/0b12169d-bffe-44ae-ba62-cd0b7270d320/thumbnail.jpg" alt="Episode 5" class="episode-thumbnail w-full h-full object-cover">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/0b12169d-bffe-44ae-ba62-cd0b7270d320/preview.webp" alt="Episode 5 Preview" class="episode-preview">
+              <div class="episode-badge">EP 7</div>
+              <div class="duration-badge">24:15</div>
+              <div class="play-overlay">
+                <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold">Episode 7</h3>
+              <p class="text-gray-400 text-sm">One Piece</p>
+            </div>
+          </a>
+          <a href="https://iframe.mediadelivery.net/play/422400/5ce057e5-c465-4bc0-9d25-e1b0b195c42d" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-video">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/5ce057e5-c465-4bc0-9d25-e1b0b195c42d/thumbnail.jpg" alt="Episode 5" class="episode-thumbnail w-full h-full object-cover">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/5ce057e5-c465-4bc0-9d25-e1b0b195c42d/preview.webp" alt="Episode 5 Preview" class="episode-preview">
+              <div class="episode-badge">EP 8</div>
+              <div class="duration-badge">24:15</div>
+              <div class="play-overlay">
+                <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold">Episode 8</h3>
+              <p class="text-gray-400 text-sm">One Piece</p>
+            </div>
+          </a>
+          <a href="https://iframe.mediadelivery.net/play/422400/ac19ab31-beda-4845-8be1-530a58ebc2f6" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-video">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/ac19ab31-beda-4845-8be1-530a58ebc2f6/thumbnail.jpg" alt="Episode 5" class="episode-thumbnail w-full h-full object-cover">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/ac19ab31-beda-4845-8be1-530a58ebc2f6/preview.webp" alt="Episode 5 Preview" class="episode-preview">
+              <div class="episode-badge">EP 9</div>
+              <div class="duration-badge">24:15</div>
+              <div class="new-badge">NEW</div>
+              <div class="play-overlay">
+                <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold">Episode 9</h3>
+              <p class="text-gray-400 text-sm">One Piece</p>
+            </div>
+          </a>
+          <a href="https://iframe.mediadelivery.net/play/422400/1fca5b50-cf20-4505-b1d2-2d5cac20406f" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-video">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/1fca5b50-cf20-4505-b1d2-2d5cac20406f/thumbnail.jpg" alt="Episode 5" class="episode-thumbnail w-full h-full object-cover">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/1fca5b50-cf20-4505-b1d2-2d5cac20406f/preview.webp" alt="Episode 5 Preview" class="episode-preview">
+              <div class="episode-badge">EP 10</div>
+              <div class="duration-badge">24:15</div>
+              <div class="new-badge">NEW</div>
+              <div class="play-overlay">
+                <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold">Episode 10</h3>
+              <p class="text-gray-400 text-sm">One Piece</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommended Section -->
+    <section class="py-8">
+      <div class="container mx-auto px-4">
+        <div class="section-header">
+          <h2 class="section-title">Recommended For You</h2>
+          <a href="#" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <!-- Tokyo Ghoul 600*900pxx-->
+          <a href="#" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-[2/3]">
+              <img src="images/tokyo reco grid.jpg" alt="Tokyo Ghoul" class="w-full h-full object-cover">
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold text-sm">Tokyo Ghoul</h3>
+              <div class="flex items-center mt-1">
+                <div class="star-rating text-xs">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="text-xs text-gray-400 ml-1">8.2</span>
+              </div>
+            </div>
+          </a>
+          
+          <!-- Steins;Gate -->
+          <a href="#" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-[2/3]">
+              <img src="https://upload.wikimedia.org/wikipedia/en/0/07/SteinsGate.jpg" alt="Steins;Gate" class="w-full h-full object-cover">
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold text-sm">Steins;Gate</h3>
+              <div class="flex items-center mt-1">
+                <div class="star-rating text-xs">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-xs text-gray-400 ml-1">9.1</span>
+              </div>
+            </div>
+          </a>
+          
+          <!-- One Piece -->
+          <a href="#" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-[2/3]">
+              <img src="https://upload.wikimedia.org/wikipedia/en/2/2d/OnePiece62Cover.png" alt="One Piece" class="w-full h-full object-cover">
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold text-sm">One Piece</h3>
+              <div class="flex items-center mt-1">
+                <div class="star-rating text-xs">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="text-xs text-gray-400 ml-1">8.9</span>
+              </div>
+            </div>
+          </a>
+          
+          <!-- Demon Slayer -->
+          <a href="#" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-[2/3]">
+              <img src="https://placeholder.svg?height=400&width=300" alt="Demon Slayer" class="w-full h-full object-cover">
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold text-sm">Demon Slayer</h3>
+              <div class="flex items-center mt-1">
+                <div class="star-rating text-xs">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-xs text-gray-400 ml-1">9.0</span>
+              </div>
+            </div>
+          </a>
+          
+          <!-- Attack on Titan -->
+          <a href="#" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-[2/3]">
+              <img src="https://placeholder.svg?height=400&width=300" alt="Attack on Titan" class="w-full h-full object-cover">
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold text-sm">Attack on Titan</h3>
+              <div class="flex items-center mt-1">
+                <div class="star-rating text-xs">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-xs text-gray-400 ml-1">9.3</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 py-8 mt-8">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <a href="index.html" class="text-xl font-bold text-red-600">BeardexAnime</a>
+          <p class="text-gray-500 text-sm mt-2">© 2023 BeardexAnime. All rights reserved.</p>
+        </div>
+        
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-white">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white">
+            <i class="fab fa-discord"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+        <div>
+          <h4 class="text-white font-bold mb-3 text-sm">About</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">About Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Contact</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Careers</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-bold mb-3 text-sm">Help</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">FAQ</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Devices</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Account</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-bold mb-3 text-sm">Legal</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Terms of Service</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Cookie Policy</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-bold mb-3 text-sm">Apps</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">iOS</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Android</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">TV Apps</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Expanded anime list data for search functionality
+    const animeList = [
+      {
+        title: 'The Unaware Atelier Master',
+        image: 'https://vz-77b320ab-237.b-cdn.net/04c8e229-055b-4c20-9c34-14e7a12fba2c/thumbnail.jpg',
+        link: 'naruto-episodes.html',
+        category: ['Fantasy', 'Adventure', 'Comedy', 'Magic'],
+        rating: 8.7
+      },
+      {
+        title: 'Tokyo Ghoul',
+        image: 'https://upload.wikimedia.org/wikipedia/en/6/6d/Tokyo_Ghoul_volume_1_cover.jpg',
+        link: 'tokyo-ghoul.html',
+        category: ['Horror', 'Action', 'Supernatural'],
+        rating: 8.2
+      },
+      {
+        title: 'Steins;Gate',
+        image: 'https://upload.wikimedia.org/wikipedia/en/0/07/SteinsGate.jpg',
+        link: 'steins-gate.html',
+        category: ['Sci-Fi', 'Thriller', 'Drama'],
+        rating: 9.1
+      },
+      {
+        title: 'One Piece',
+        image: 'https://upload.wikimedia.org/wikipedia/en/2/2d/OnePiece62Cover.png',
+        link: 'one-piece.html',
+        category: ['Action', 'Adventure', 'Comedy'],
+        rating: 8.9
+      },
+      {
+        title: 'Demon Slayer',
+        image: 'https://placeholder.svg?height=400&width=300',
+        link: 'demon-slayer.html',
+        category: ['Action', 'Supernatural', 'Historical'],
+        rating: 9.0
+      },
+      {
+        title: 'Attack on Titan',
+        image: 'https://placeholder.svg?height=400&width=300',
+        link: 'attack-on-titan.html',
+        category: ['Action', 'Drama', 'Fantasy'],
+        rating: 9.3
+      },
+      {
+        title: 'My Hero Academia',
+        image: 'https://placeholder.svg?height=400&width=300',
+        link: 'my-hero-academia.html',
+        category: ['Action', 'Superhero', 'School'],
+        rating: 8.5
+      },
+      {
+        title: 'Jujutsu Kaisen',
+        image: 'https://placeholder.svg?height=400&width=300',
+        link: 'jujutsu-kaisen.html',
+        category: ['Action', 'Supernatural', 'School'],
+        rating: 8.8
+      },
+      {
+    title: 'Solo Leveling',
+    image: 'https://upload.wikimedia.org/wikipedia/en/3/3e/Solo_Leveling_Anime_Key_Visual.jpg',
+    link: 'https://www.crunchyroll.com/watch/GK9U3KWZN/im-used-to-it',
+    category: ['Action', 'Fantasy'],
+    rating: 8.7
+  },
+  {
+    title: 'Demon Slayer: Kimetsu no Yaiba – Swordsmith Village Arc',
+    image: 'https://upload.wikimedia.org/wikipedia/en/6/65/Kimetsu_no_Yaiba_Swordsmith_Village_Arc.jpg',
+    link: 'https://www.crunchyroll.com/news/latest/2023/5/1/demon-slayer-kimetsu-no-yaiba-swordsmith-village-arc-hindi-dub-release-date',
+    category: ['Action', 'Supernatural', 'Historical'],
+    rating: 8.9
+  },
+  {
+    title: 'My Dress-Up Darling',
+    image: 'https://upload.wikimedia.org/wikipedia/en/3/3e/My_Dress-Up_Darling_volume_1_cover.jpg',
+    link: 'https://www.crunchyroll.com/news/latest/2022/7/18/crunchyroll-announces-hindi-dubs-for-ranking-of-kings-my-dress-up-darling',
+    category: ['Romance', 'Slice of Life'],
+    rating: 8.1
+  },
+  {
+    title: 'Ranking of Kings',
+    image: 'https://upload.wikimedia.org/wikipedia/en/1/1e/Ranking_of_Kings_volume_1_cover.jpg',
+    link: 'https://www.crunchyroll.com/news/latest/2022/7/18/crunchyroll-announces-hindi-dubs-for-ranking-of-kings-my-dress-up-darling',
+    category: ['Adventure', 'Fantasy', 'Drama'],
+    rating: 8.6
+  },
+  {
+    title: 'Log Horizon Season 1',
+    image: 'https://upload.wikimedia.org/wikipedia/en/1/1d/Log_Horizon_volume_1_cover.jpg',
+    link: 'https://www.crunchyroll.com/news/latest/2023/3/1/log-horizon-season-1-tomo-chan-is-a-girl-and-more-hindi-dub-premiere-dates-announced',
+    category: ['Adventure', 'Fantasy', 'Sci-Fi'],
+    rating: 7.7
+  },
+  {
+    title: 'Tomo-chan Is a Girl!',
+    image: 'https://upload.wikimedia.org/wikipedia/en/3/3e/Tomo-chan_Is_a_Girl%21_volume_1_cover.jpg',
+    link: 'https://www.crunchyroll.com/news/latest/2023/3/1/log-horizon-season-1-tomo-chan-is-a-girl-and-more-hindi-dub-premiere-dates-announced',
+    category: ['Romance', 'Comedy', 'School'],
+    rating: 7.9
+  },
+  {
+    title: 'True Beauty',
+    image: 'https://upload.wikimedia.org/wikipedia/en/3/3e/True_Beauty_TV_series_poster.jpg',
+    link: 'https://www.crunchyroll.com/watch/GK9UGV3M0/a-goddess-descends',
+    category: ['Romance', 'Drama'],
+    rating: 8.0
+  },
+  {
+    title: 'My Unique Skill Makes Me OP Even at Level 1',
+    image: 'https://upload.wikimedia.org/wikipedia/en/3/3e/My_Unique_Skill_Makes_Me_OP_Even_at_Level_1_volume_1_cover.jpg',
+    link: 'https://www.crunchyroll.com/watch/GEVUZXJMQ/',
+    category: ['Fantasy', 'Adventure'],
+    rating: 7.5
+  },
+  {
+    title: 'Kaiju No. 8',
+    image: 'https://upload.wikimedia.org/wikipedia/en/3/3e/Kaiju_No._8_volume_1_cover.jpg',
+    link: 'https://www.crunchyroll.com/news/seasonal-lineup/2024/3/13/crunchyroll-spring-2024-dubs-konosuba-black-butler-kaiju-no-8',
+    category: ['Action', 'Sci-Fi'],
+    rating: 8.2
+  },
+  {
+    title: 'Black Butler: Public School Arc',
+    image: 'https://upload.wikimedia.org/wikipedia/en/3/3e/Black_Butler_volume_1_cover.jpg',
+    link: 'https://www.crunchyroll.com/news/seasonal-lineup/2024/3/13/crunchyroll-spring-2024-dubs-konosuba-black-butler-kaiju-no-8',
+    category: ['Supernatural', 'Mystery'],
+    rating: 8.0
+  },
+      {
+        title: 'Fullmetal Alchemist: Brotherhood',
+        image: 'https://placeholder.svg?height=400&width=300',
+        link: 'fullmetal-alchemist.html',
+        category: ['Action', 'Adventure', 'Fantasy'],
+        rating: 9.2
+      },
+      {
+        title: 'Death Note',
+        image: 'https://placeholder.svg?height=400&width=300',
+        link: 'death-note.html',
+        category: ['Thriller', 'Supernatural', 'Psychological'],
+        rating: 9.0
+      }
+    ];
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    searchInput.addEventListener('focus', () => {
+      if (searchResults.style.display !== 'block') {
+        searchResults.style.display = 'block';
+      }
+    });
+
+    // Close search results when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+        searchResults.style.display = 'none';
+      }
+    });
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+      
+      if (query === '') {
+        // Show all anime if no query
+        displaySearchResults(animeList);
+        return;
+      }
+
+      const filtered = animeList.filter(anime =>
+        anime.title.toLowerCase().includes(query) || 
+        anime.category.some(cat => cat.toLowerCase().includes(query))
+      );
+
+      displaySearchResults(filtered);
+    });
+
+    // Display search results
+    function displaySearchResults(results) {
+      if (results.length === 0) {
+        searchResults.innerHTML = `<div class="p-4 text-center text-gray-400">No anime found</div>`;
+      } else {
+        searchResults.innerHTML = results.map(anime => `
+          <a href="${anime.link}" class="search-result-item">
+            <img src="${anime.image}" alt="${anime.title}">
+            <div>
+              <div class="font-bold text-sm">${anime.title}</div>
+              <div class="text-xs text-gray-400">${anime.category.join(', ')}</div>
+              <div class="text-xs mt-1">
+                <span class="star-rating">
+                  <i class="fas fa-star"></i>
+                </span>
+                ${anime.rating}
+              </div>
+            </div>
+          </a>
+        `).join('');
+      }
+      
+      // Show search results
+      searchResults.style.display = 'block';
+    }
+
+    // Initialize search results on page load
+    displaySearchResults(animeList);
+
+    // Function to filter by category
+    function filterCategory(category) {
+      const filtered = category === 'All' ? animeList : animeList.filter(anime => anime.category.includes(category));
+      displaySearchResults(filtered);
+      searchResults.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

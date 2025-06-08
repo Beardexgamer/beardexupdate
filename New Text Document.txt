@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BeardexAnime - Watch Hindi Dub Anime</title>
+
+  <!-- Video.js and IMA SDK -->
+  <link href="https://vjs.zencdn.net/7.21.1/video-js.css" rel="stylesheet" />
+  <script src="https://vjs.zencdn.net/7.21.1/video.min.js"></script>
+  <script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/videojs-contrib-ads@latest/dist/videojs-contrib-ads.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/videojs-ima@latest/dist/videojs.ima.min.js"></script>
+
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .episode-card {
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .episode-card:hover {
+      transform: scale(1.03);
+    }
+
+    .thumb-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+
+    .thumb-static,
+    .thumb-preview {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+    }
+
+    .thumb-preview {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .episode-card:hover .thumb-preview {
+      opacity: 1;
+    }
+
+    .episode-card:hover .thumb-static {
+      opacity: 0;
+    }
+
+    .p-3 {
+      padding: 10px;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      font-size: 30px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>BeardexAnime - Hindi Dubbed Episodes</h1>
+
+  <div class="grid">
+    <!-- Episode 1 -->
+    <div class="episode-card" data-video="62132bfa-64ab-4f28-8144-52b9371836fd" data-title="Episode 1">
+      <div class="thumb-wrapper">
+        <img src="https://vz-77b320ab-237.b-cdn.net/62132bfa-64ab-4f28-8144-52b9371836fd/thumbnail.jpg" alt="Episode 1 Thumbnail" class="thumb-static">
+        <img src="https://vz-77b320ab-237.b-cdn.net/62132bfa-64ab-4f28-8144-52b9371836fd/preview.webp" alt="Episode 1 Preview" class="thumb-preview">
+      </div>
+      <div class="p-3">
+        <h3>Episode 1</h3>
+        <p>Hindi Dub | 24:15</p>
+      </div>
+    </div>
+
+    <!-- Episode 2 (example placeholder) -->
+    <div class="episode-card" data-video="YOUR_SECOND_PLAYBACK_ID" data-title="Episode 2">
+      <div class="thumb-wrapper">
+        <img src="https://via.placeholder.com/300x180.png?text=Ep+2" alt="Episode 2 Thumbnail" class="thumb-static">
+        <img src="https://via.placeholder.com/300x180.webp?text=Preview+2" alt="Episode 2 Preview" class="thumb-preview">
+      </div>
+      <div class="p-3">
+        <h3>Episode 2</h3>
+        <p>Hindi Dub | 23:10</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal player -->
+  <div class="modal" id="videoModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">×</span>
+      <video id="modalPlayer" class="video-js vjs-default-skin" controls width="100%" height="auto" data-setup='{}'></video>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('videoModal');
+    const player = videojs('modalPlayer');
+
+    player.ima({
+      adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&env=vp&output=vast&unviewed_position_start=1&correlator='
+    });
+
+    document.querySelectorAll('.episode-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const playbackId = card.getAttribute('data-video');
+        const streamUrl = `https://stream.mux.com/${playbackId}.m3u8`;
+
+        player.pause();
+        player.src({ type: "application/x-mpegURL", src: streamUrl });
+        player.ready(() => {
+          player.play();
+        });
+
+        modal.classList.add('active');
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove('active');
+      player.pause();
+      player.currentTime(0);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="6a97888e-site-verification" content="3236be7fb9e7eba22cf0c57d20d00379">
+  <title>my unique skill makes me op even at level 1  BeardexAnime</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-color: #2510e0;
+      --secondary-color: #da3619;
+      --background-dark: #0f0f14;
+      --card-bg: #1a1a24;
+      --text-light: #f8f8f8;
+      --text-muted: #a0a0a0;
+    }
+    
+    body {
+      background-color: var(--background-dark);
+      color: var(--text-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 4px;
+    }
+    
+    /* FIXED: Hero section background image */
+    .hero-section {
+      position: relative;
+      min-height: 30vh;
+      background-image: url('');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Responsive background fixes */
+    @media (max-width: 768px) {
+      .hero-section {
+        background-attachment: scroll;
+        background-position: center top;
+        min-height: 50vh;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .hero-section {
+        background-position: center center;
+        min-height: 70vh;
+        background-size: cover;
+      }
+    }
+    
+    @media (min-width: 1440px) {
+      .hero-section {
+        background-size: cover;
+        background-position: center center;
+        min-height: 80vh;
+      }
+    }
+    
+    /* Hero section with gradient overlay */
+    .hero-overlay {
+      background: linear-gradient(to top, var(--background-dark) 0%, rgba(15, 15, 20, 0.8) 50%, rgba(15, 15, 20, 0.6) 100%);
+    }
+    
+    /* Hero content positioning */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 2rem 1rem;
+    }
+    
+    /* ADDED: Social media icon hover effects */
+    .social-icon {
+      transition: all 0.3s ease;
+      color: #9ca3af;
+    }
+    
+    .social-icon:hover {
+      transform: translateY(-2px);
+    }
+    
+    /* Facebook hover effect */
+    .social-icon.facebook:hover {
+      color: #1877f2 !important;
+    }
+    
+    /* Twitter hover effect */
+    .social-icon.twitter:hover {
+      color: #1da1f2 !important;
+    }
+    
+    /* YouTube hover effect */
+    .social-icon.youtube:hover {
+      color: #ff0000 !important;
+    }
+    
+    /* Instagram hover effect */
+    .social-icon.instagram:hover {
+      color: #e4405f !important;
+    }
+    
+    /* Discord hover effect */
+    .social-icon.discord:hover {
+      color: #5865f2 !important;
+    }
+    
+    /* Episode card animations */
+    .episode-card {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .episode-card:hover {
+      transform: scale(1.05);
+      z-index: 10;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Episode preview animation */
+    .episode-thumbnail {
+      transition: opacity 0.3s ease;
+    }
+    .episode-preview {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .episode-card:hover .episode-thumbnail {
+      opacity: 0;
+    }
+    .episode-card:hover .episode-preview {
+      opacity: 1;
+    }
+    
+    /* Episode info overlay */
+    .episode-info-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+      transform: translateY(0);
+      transition: transform 0.3s ease;
+    }
+    
+    /* Play button overlay */
+    .play-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .episode-card:hover .play-overlay {
+      opacity: 1;
+    }
+    
+    /* Progress bar */
+    .progress-bar {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 5;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-color);
+    }
+    
+    /* Rating stars */
+    .star-rating {
+      color: #ffc107;
+    }
+    .star-empty {
+      color: #555;
+    }
+    
+    /* Genre tags */
+    .genre-tag {
+      background-color: rgba(108, 92, 231, 0.2);
+      border: 1px solid rgba(108, 92, 231, 0.4);
+      color: #a29bfe;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Buttons */
+    .primary-btn {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .primary-btn:hover {
+      background-color: #f40612;
+      transform: translateY(-2px);
+    }
+    .secondary-btn {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .secondary-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    /* Episode badge */
+    .episode-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 5;
+    }
+    
+    /* New episode badge */
+    .new-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 5;
+    }
+    
+    /* Duration badge */
+    .duration-badge {
+      position: absolute;
+      bottom: 40px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      z-index: 5;
+    }
+    
+    /* Section headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      position: relative;
+      padding-left: 0.75rem;
+    }
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    /* View all link */
+    .view-all {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+    .view-all:hover {
+      color: var(--primary-color);
+    }
+    .view-all i {
+      margin-left: 0.25rem;
+    }
+    
+    /* Info pills */
+    .info-pill {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    .info-pill i {
+      margin-right: 0.5rem;
+      color: var(--secondary-color);
+    }
+    
+    /* Navigation */
+    .nav-link {
+      color: var(--text-muted);
+      transition: color 0.2s;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-light);
+    }
+    .nav-link.active {
+      position: relative;
+    }
+    .nav-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 2px;
+      background-color: var(--primary-color);
+      border-radius: 1px;
+    }
+    
+    /* Search results */
+    .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--card-bg);
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+    }
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background-color 0.2s;
+    }
+    .search-result-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    .search-result-item img {
+      width: 40px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 1rem;
+    }
+    
+    /* Screenshots section */
+    .screenshots-section {
+      position: relative;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    .screenshot-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, var(--background-dark) 100%);
+      pointer-events: none;
+    }
+    .screenshot-content {
+      position: relative;
+      z-index: 10;
+      padding: 2rem 0;
+    }
+
+    /* Season tabs */
+    .season-tabs {
+      display: flex;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .season-tab {
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-bottom: 2px solid transparent;
+    }
+    .season-tab.active {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+    }
+    .season-tab:hover:not(.active) {
+      color: var(--text-light);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    .season-content {
+      display: none;
+    }
+    .season-content.active {
+      display: block;
+    }
+
+    /* Video player */
+    .video-player-container {
+      position: relative;
+      width: 100%;
+      margin-bottom: 1rem;
+      background-color: #000;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .video-player {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background-color: #000;
+    }
+
+    /* Player controls overlay */
+    .player-controls-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background-color: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .video-player-container:hover .player-controls-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .player-control-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 20;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+    
+    .player-control-btn:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+    
+    /* Episode navigation buttons */
+    .episode-nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .episode-nav-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-radius: 4px;
+      font-weight: 600;
+      transition: all 0.2s;
+      gap: 0.5rem;
+    }
+    
+    .episode-nav-btn:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+    
+    .episode-nav-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    
+    /* Episode info display */
+    .current-episode-info {
+      text-align: center;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+    
+    /* Mobile optimizations */
+    @media (max-width: 640px) {
+      .player-control-btn {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .episode-nav-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+      }
+      
+      .season-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+      }
+
+      /* Mobile search overlay */
+    .mobile-search-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 16, 20, 0.95);
+      z-index: 100;
+      display: none;
+      padding: 16px;
+      animation: fadeIn 0.2s ease-out;
+    }
+    
+    .mobile-search-overlay.active {
+      display: block;
+    }
+    
+    .mobile-search-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .mobile-search-input {
+      flex: 1;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      border: 1px solid #374151;
+      background-color: #1f2937;
+      color: white;
+      font-size: 14px;
+    }
+    
+    .mobile-search-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+    
+    .mobile-close-btn {
+      color: #9ca3af;
+    }
+    
+    .mobile-search-results {
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="bg-opacity-90 bg-black backdrop-filter backdrop-blur-md fixed top-0 w-full z-50">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-8">
+          <a href="index.html" class="text-2xl font-bold text-red-600">BeardexAnime</a>
+          <nav class="hidden md:flex space-x-2">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Genres</a>
+            <a href="#" class="nav-link active">Popular</a>
+            <a href="#" class="nav-link">New Releases</a>
+          </nav>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <div class="relative hidden md:block">
+            <input type="text" id="searchInput" placeholder="Search anime..." class="bg-gray-800 bg-opacity-70 text-sm rounded-full py-1 px-4 pl-8 focus:outline-none focus:ring-1 focus:ring-red-500 w-48">
+            <i class="fas fa-search absolute left-3 top-2 text-gray-400 text-sm"></i>
+            
+            <!-- Search Results Dropdown -->
+            <div id="searchResults" class="search-results">
+              <!-- Search results will be populated here by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FIXED: Devil May Cry Details Banner Section -->
+  <section class="hero-section">
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-70 z-0 hero-overlay"></div>
+
+    <!-- Content - Centered both horizontally and vertically -->
+    <div class="hero-content">
+      <img src="image/my unqie skill make me op level 1 grid anime.avif" alt="Devil may cry" class="mx-auto w-80 mb-8 rounded shadow-md">
+      <h2 class="text-3xl md:text-4xl font-bold mb-2">my unique skill makes me op even at level 1</h2>
+      <p class="text-yellow-400 text-lg font-semibold mb-4"><i class="fas fa-star mr-1"></i> 7.5/10</p>
+      <div class="mb-4">
+        <span class="genre-tag">Fantasy</span>
+        <span class="genre-tag">Adventure</span>
+        <span class="genre-tag">Comedy</span>
+        <span class="genre-tag">Magic</span>
+      </div>
+      <p class="max-w-2xl mx-auto text-gray-300">
+        Ryota Sato was once your typical office worker. Now, he’s slaying monsters in a new world! After suddenly being transported to this magical land, he learns he must kill monsters and profit from whatever they drop. But with a low skill level, all hope seems lost…until he discovers he has a unique ability to collect rare drops. Maybe he can survive this new world after all.</p>
+    </div>
+  </section>
+
+    <!-- Info Pills -->
+    <section class="py-6 bg-opacity-50 bg-black">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="info-pill">
+            <i class="far fa-calendar-alt"></i>
+            <div>
+              <div class="text-xs text-gray-400">Airing</div>
+              <div class="text-sm">Complete</div>
+            </div>
+          </div>
+          <div class="info-pill">
+            <i class="fas fa-tv"></i>
+            <div>
+              <div class="text-xs text-gray-400">Status</div>
+              <div class="text-sm">Complete</div>
+            </div>
+          </div>
+          <div class="info-pill">
+            <i class="fas fa-users"></i>
+            <div>
+              <div class="text-xs text-gray-400">Popularity</div>
+              <div class="text-sm">1M fans</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Player Section -->
+    <section class="py-8">
+      <div class="container mx-auto px-4">
+        <!-- Season Tabs -->
+        <div class="season-tabs">
+          <div class="season-tab active" data-season="1">Season 1</div>
+          <div class="season-tab" data-season="2"></div>
+        </div>
+
+        <!-- Current Episode Info -->
+        <div id="current-episode-info" class="current-episode-info">
+          <h3>Now Playing: <span id="current-episode-title">Season 1, Episode 1</span></h3>
+        </div>
+
+        <!-- Video Player -->
+        <div class="video-player-container">
+          <!-- Season 1 Video Player -->
+          <div id="season1-player" class="season-content active">
+            <iframe id="season1-iframe" class="video-player" src="https://iframe.mediadelivery.net/embed/423501/7388eee6-77e1-4a7e-a4f2-3345fce5722d" frameborder="0" allowfullscreen></iframe>
+            
+            <!-- Player Controls Overlay -->
+            <div class="player-controls-overlay">
+              <button id="prev-episode-btn-overlay-s1" class="player-control-btn" aria-label="Previous Episode">
+                <i class="fas fa-step-backward"></i>
+              </button>
+              <button id="next-episode-btn-overlay-s1" class="player-control-btn" aria-label="Next Episode">
+                <i class="fas fa-step-forward"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Season 2 Video Player -->
+          <div id="season2-player" class="season-content">
+            <iframe id="season2-iframe" class="video-player" src="https://iframe.mediadelivery.net/embed/423501/cae42b2e-d4c3-4fab-9513-e2986e1d762c" frameborder="0" allowfullscreen></iframe>
+            
+            <!-- Player Controls Overlay -->
+            <div class="player-controls-overlay">
+              <button id="prev-episode-btn-overlay-s2" class="player-control-btn" aria-label="Previous Episode">
+                <i class="fas fa-step-backward"></i>
+              </button>
+              <button id="next-episode-btn-overlay-s2" class="player-control-btn" aria-label="Next Episode">
+                <i class="fas fa-step-forward"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Episode Navigation Buttons -->
+        <div class="episode-nav-buttons">
+          <button id="prev-episode-btn-s1" class="episode-nav-btn disabled" data-season="1">
+            <i class="fas fa-arrow-left"></i> Previous Episode
+          </button>
+          <button id="next-episode-btn-s1" class="episode-nav-btn" data-season="1">
+            Next Episode <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+        
+        <!-- Hidden Season 2 Navigation Buttons (will be shown when season 2 is active) -->
+        <div class="episode-nav-buttons" style="display: none;" id="season2-nav-buttons">
+          <button id="prev-episode-btn-s2" class="episode-nav-btn disabled" data-season="2">
+            <i class="fas fa-arrow-left"></i> Previous Episode
+          </button>
+          <button id="next-episode-btn-s2" class="episode-nav-btn" data-season="2">
+            Next Episode <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Episodes Section -->
+    <section class="py-8">
+      <div class="container mx-auto px-4">
+        <div class="section-header">
+          <h2 class="section-title">Episodes</h2>
+          <a href="https://cuty.io/CAttnOl" class="view-all">Download Full Season <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <!-- Season 1 Episodes -->
+        <div id="season1-episodes" class="season-content active">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Episode 1 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/7388eee6-77e1-4a7e-a4f2-3345fce5722d" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="1" data-season="1">
+              <div class="relative aspect-video">
+                <!-- Static Thumbnail -->
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/7388eee6-77e1-4a7e-a4f2-3345fce5722d/thumbnail.jpg" alt="Episode 1" class="episode-thumbnail w-full h-full object-cover">
+                
+                <!-- Animated Preview (WebP) -->
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/7388eee6-77e1-4a7e-a4f2-3345fce5722d/preview.webp" alt="Episode 1 Preview" class="episode-preview">
+                
+                <!-- Episode Badge -->
+                <div class="episode-badge">EP 1</div>
+                
+                <!-- Duration Badge -->
+                <div class="duration-badge">24:38</div>
+                
+                <!-- Play Overlay -->
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 75%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">The Have-Nots</h3>
+                <p class="text-gray-400 text-sm">my unique skill makes me op even at level 1</p>
+              </div>
+            </a>
+            
+            <!-- Episode 2 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/cae42b2e-d4c3-4fab-9513-e2986e1d762c" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="2" data-season="1">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/thumbnail.jpg" alt="Episode 2" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/preview.webp" alt="Episode 2 Preview" class="episode-preview">
+                <div class="episode-badge">EP 2</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">Hunger Boost</h3>
+                <p class="text-gray-400 text-sm">my unique skill makes me op even at level 1</p>
+              </div>
+            </a>
+
+            <!-- Episode 3 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/cae42b2e-d4c3-4fab-9513-e2986e1d762c" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="2" data-season="1">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/thumbnail.jpg" alt="Episode 2" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/preview.webp" alt="Episode 2 Preview" class="episode-preview">
+                <div class="episode-badge">EP 3</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">Kill All the little Black Things</h3>
+                <p class="text-gray-400 text-sm">my unique skill makes me op even at level 1</p>
+              </div>
+            </a>
+
+            <!-- Episode 4 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/cae42b2e-d4c3-4fab-9513-e2986e1d762c" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="2" data-season="1">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/thumbnail.jpg" alt="Episode 2" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/preview.webp" alt="Episode 2 Preview" class="episode-preview">
+                <div class="episode-badge">EP 4</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">Moving to a new Place! Just Relaxing at Home</h3>
+                <p class="text-gray-400 text-sm">my unique skill makes me op even at level 1</p>
+              </div>
+            </a>
+
+            <!-- Episode 5 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/cae42b2e-d4c3-4fab-9513-e2986e1d762c" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="2" data-season="1">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/thumbnail.jpg" alt="Episode 2" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/preview.webp" alt="Episode 2 Preview" class="episode-preview">
+                <div class="episode-badge">EP 5</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">Yay! it's My Turn Now</h3>
+                <p class="text-gray-400 text-sm">my unique skill makes me op even at level 1</p>
+              </div>
+            </a>
+
+            <!-- Episode 6 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/cae42b2e-d4c3-4fab-9513-e2986e1d762c" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="2" data-season="1">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/thumbnail.jpg" alt="Episode 2" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/preview.webp" alt="Episode 2 Preview" class="episode-preview">
+                <div class="episode-badge">EP 6</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">A Beautiful Girl Appers</h3>
+                <p class="text-gray-400 text-sm">my unique skill makes me op even at level 1</p>
+              </div>
+            </a>
+
+            <!-- Episode 7 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/cae42b2e-d4c3-4fab-9513-e2986e1d762c" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="2" data-season="1">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/thumbnail.jpg" alt="Episode 2" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/preview.webp" alt="Episode 2 Preview" class="episode-preview">
+                <div class="episode-badge">EP 7</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">This Dungeon Battle Is a Vortex of Schemes</h3>
+                <p class="text-gray-400 text-sm">my unique skill makes me op even at level 1</p>
+              </div>
+            </a>
+
+            <!-- Episode 8 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/cae42b2e-d4c3-4fab-9513-e2986e1d762c" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="2" data-season="1">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/thumbnail.jpg" alt="Episode 2" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/preview.webp" alt="Episode 2 Preview" class="episode-preview">
+                <div class="episode-badge">EP 8</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">You can Do it! em Celeste</h3>
+                <p class="text-gray-400 text-sm">my unique skill makes me op even at level 1</p>
+              </div>
+            </a>
+
+            <!-- Episode 9 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/cae42b2e-d4c3-4fab-9513-e2986e1d762c" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="2" data-season="1">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/thumbnail.jpg" alt="Episode 2" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/cae42b2e-d4c3-4fab-9513-e2986e1d762c/preview.webp" alt="Episode 2 Preview" class="episode-preview">
+                <div class="episode-badge">EP 9</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">We Have All Been waiting! it's eve's Turn to Shine</h3>
+                <p class="text-gray-400 text-sm">my unique skill makes me op even at level 1</p>
+              </div>
+            </a>
+
+            
+            <!-- Episode 10 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/4cede6af-8158-4b3b-b90d-6ab231167738" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="4" data-season="1">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/4cede6af-8158-4b3b-b90d-6ab231167738/thumbnail.jpg" alt="Episode 4" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/4cede6af-8158-4b3b-b90d-6ab231167738/preview.webp" alt="Episode 4 Preview" class="episode-preview">
+                <div class="episode-badge">EP 10</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 0%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">The Arrival of Alice</h3>
+                <p class="text-gray-400 text-sm">my unique skill makes me op even at level 1</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Season 2 Episodes -->
+        <div id="season2-episodes" class="season-content">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Episode 1 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/a6ce4db3-6228-4a27-b43f-bd53a7138ee0" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="1" data-season="2">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/a6ce4db3-6228-4a27-b43f-bd53a7138ee0/thumbnail.jpg" alt="Season 2 Episode 1" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/a6ce4db3-6228-4a27-b43f-bd53a7138ee0/preview.webp" alt="Season 2 Episode 1 Preview" class="episode-preview">
+                <div class="episode-badge">EP 1</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 0%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">Episode 1</h3>
+                <p class="text-gray-400 text-sm">Devil may cry - Season 2</p>
+              </div>
+            </a>
+            
+            <!-- Episode 2 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/352594d3-ceb1-43e7-aad4-3acb8522cb22" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="2" data-season="2">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/352594d3-ceb1-43e7-aad4-3acb8522cb22/thumbnail.jpg" alt="Season 2 Episode 2" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/352594d3-ceb1-43e7-aad4-3acb8522cb22/preview.webp" alt="Season 2 Episode 2 Preview" class="episode-preview">
+                <div class="episode-badge">EP 2</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 0%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">Episode 2</h3>
+                <p class="text-gray-400 text-sm">Devil may cry - Season 2</p>
+              </div>
+            </a>
+            
+            
+            <!-- Episode 4 -->
+            <a href="https://iframe.mediadelivery.net/embed/423501/80321dde-3a48-41b1-8d46-f0df30610ab2" class="episode-card rounded-lg overflow-hidden bg-gray-800" data-episode="4" data-season="2">
+              <div class="relative aspect-video">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/80321dde-3a48-41b1-8d46-f0df30610ab2/thumbnail.jpg" alt="Season 2 Episode 4" class="episode-thumbnail w-full h-full object-cover">
+                <img src="https://vz-dec20ab7-8c5.b-cdn.net/80321dde-3a48-41b1-8d46-f0df30610ab2/preview.webp" alt="Season 2 Episode 4 Preview" class="episode-preview">
+                <div class="episode-badge">EP 4</div>
+                <div class="duration-badge">24:15</div>
+                <div class="play-overlay">
+                  <div class="w-16 h-16 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-play text-white text-xl"></i>
+                  </div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 0%;"></div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h3 class="font-bold">Episode 4</h3>
+                <p class="text-gray-400 text-sm">Devil may cry - Season 2</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommended Section -->
+    <section class="py-8">
+      <div class="container mx-auto px-4">
+        <div class="section-header">
+          <h2 class="section-title">Recommended For You</h2>
+          <a href="#" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <!-- Tokyo Ghoul 600*900pxx-->
+          <a href="#" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-[2/3]">
+              <img src="images/tokyo reco grid.jpg" alt="Tokyo Ghoul" class="w-full h-full object-cover">
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold text-sm">Tokyo Ghoul</h3>
+              <div class="flex items-center mt-1">
+                <div class="star-rating text-xs">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="text-xs text-gray-400 ml-1">8.2</span>
+              </div>
+            </div>
+          </a>
+          
+          
+          
+          <!-- Attack on Titan -->
+          <a href="#" class="episode-card rounded-lg overflow-hidden bg-gray-800">
+            <div class="relative aspect-[2/3]">
+              <img src="https://placeholder.svg?height=400&width=300" alt="Attack on Titan" class="w-full h-full object-cover">
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="font-bold text-sm">Attack on Titan</h3>
+              <div class="flex items-center mt-1">
+                <div class="star-rating text-xs">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-xs text-gray-400 ml-1">9.3</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FIXED: Footer with Social Media Hover Effects -->
+  <footer class="bg-gray-900 py-8 mt-8">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <a href="index.html" class="text-xl font-bold text-red-600">BeardexAnime</a>
+          <p class="text-gray-500 text-sm mt-2">© 2023 BeardexAnime. All rights reserved.</p>
+          <li><a href="#" class="text-gray-400 hover:text-white text-xs">About Us</a></li>
+        </div>
+        
+        <div class="flex space-x-6">
+          <a href="#" class="social-icon facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-icon twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="social-icon instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="social-icon discord">
+            <i class="fab fa-discord"></i>
+          </a>
+          <a href="#" class="social-icon youtube">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Expanded anime list data for search functionality
+    const animeList = [
+      {
+        title: 'The Unaware Atelier Master',
+        image: 'https://vz-77b320ab-237.b-cdn.net/04c8e229-055b-4c20-9c34-14e7a12fba2c/thumbnail.jpg',
+        link: 'naruto-episodes.html',
+        category: ['Fantasy', 'Adventure', 'Comedy', 'Magic'],
+        rating: 8.7
+      },
+      {
+        title: 'Tokyo Ghoul',
+        image: 'https://upload.wikimedia.org/wikipedia/en/6/6d/Tokyo_Ghoul_volume_1_cover.jpg',
+        link: 'tokyo-ghoul.html',
+        category: ['Horror', 'Action', 'Supernatural'],
+        rating: 8.2
+      },
+      {
+        title: 'Steins;Gate',
+        image: 'https://upload.wikimedia.org/wikipedia/en/0/07/SteinsGate.jpg',
+        link: 'steins-gate.html',
+        category: ['Sci-Fi', 'Thriller', 'Drama'],
+        rating: 9.1
+      },
+      {
+        title: 'One Piece',
+        image: 'https://upload.wikimedia.org/wikipedia/en/2/2d/OnePiece62Cover.png',
+        link: 'one-piece.html',
+        category: ['Action', 'Adventure', 'Comedy'],
+        rating: 8.9
+      },
+      {
+        title: 'Demon Slayer',
+        image: 'https://placeholder.svg?height=400&width=300',
+        link: 'demon-slayer.html',
+        category: ['Action', 'Supernatural', 'Historical'],
+        rating: 9.0
+      },
+      {
+        title: 'Attack on Titan',
+        image: 'https://placeholder.svg?height=400&width=300',
+        link: 'attack-on-titan.html',
+        category: ['Action', 'Drama', 'Fantasy'],
+        rating: 9.3
+      },
+      {
+        title: 'My Hero Academia',
+        image: 'https://placeholder.svg?height=400&width=300',
+        link: 'my-hero-academia.html',
+        category: ['Action', 'Superhero', 'School'],
+        rating: 8.5
+      },
+      {
+        title: 'Jujutsu Kaisen',
+        image: 'https://placeholder.svg?height=400&width=300',
+        link: 'jujutsu-kaisen.html',
+        category: ['Action', 'Supernatural', 'School'],
+        rating: 8.8
+      }
+    ];
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    searchInput.addEventListener('focus', () => {
+      if (searchResults.style.display !== 'block') {
+        searchResults.style.display = 'block';
+      }
+    });
+
+    // Close search results when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+        searchResults.style.display = 'none';
+      }
+    });
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+      
+      if (query === '') {
+        // Show all anime if no query
+        displaySearchResults(animeList);
+        return;
+      }
+
+      const filtered = animeList.filter(anime =>
+        anime.title.toLowerCase().includes(query) || 
+        anime.category.some(cat => cat.toLowerCase().includes(query))
+      );
+
+      displaySearchResults(filtered);
+    });
+
+    // Display search results
+    function displaySearchResults(results) {
+      if (results.length === 0) {
+        searchResults.innerHTML = `<div class="p-4 text-center text-gray-400">No anime found</div>`;
+      } else {
+        searchResults.innerHTML = results.map(anime => `
+          <a href="${anime.link}" class="search-result-item">
+            <img src="${anime.image}" alt="${anime.title}">
+            <div>
+              <div class="font-bold text-sm">${anime.title}</div>
+              <div class="text-xs text-gray-400">${anime.category.join(', ')}</div>
+              <div class="text-xs mt-1">
+                <span class="star-rating">
+                  <i class="fas fa-star"></i>
+                </span>
+                ${anime.rating}
+              </div>
+            </div>
+          </a>
+        `).join('');
+      }
+      
+      // Show search results
+      searchResults.style.display = 'block';
+    }
+
+    // Initialize search results on page load
+    displaySearchResults(animeList);
+
+    // Function to filter by category
+    function filterCategory(category) {
+      const filtered = category === 'All' ? animeList : animeList.filter(anime => anime.category.includes(category));
+      displaySearchResults(filtered);
+      searchResults.style.display = 'block';
+    }
+
+    // Season tabs functionality
+    const seasonTabs = document.querySelectorAll('.season-tab');
+    const seasonContents = document.querySelectorAll('.season-content');
+    
+    seasonTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const season = tab.getAttribute('data-season');
+        
+        // Update active tab
+        seasonTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        // Update content visibility
+        seasonContents.forEach(content => {
+          if (content.id.includes(`season${season}`) || content.id === `season${season}-player`) {
+            content.classList.add('active');
+          } else {
+            content.classList.remove('active');
+          }
+        });
+        
+        // Toggle navigation buttons visibility
+        if (season === '1') {
+          document.getElementById('season2-nav-buttons').style.display = 'none';
+          document.getElementById('prev-episode-btn-s1').parentElement.style.display = 'flex';
+        } else {
+          document.getElementById('season2-nav-buttons').style.display = 'flex';
+          document.getElementById('prev-episode-btn-s1').parentElement.style.display = 'none';
+        }
+        
+        // Reset episode navigation state
+        updateEpisodeNavigation(season, 1);
+      });
+    });
+
+    // Episode data structure
+    const episodeData = {
+      1: { // Season 1
+        1: {
+          url: 'https://iframe.mediadelivery.net/embed/423501/7388eee6-77e1-4a7e-a4f2-3345fce5722d',
+          title: 'Season 1, Episode 1'
+        },
+        2: {
+          url: 'https://iframe.mediadelivery.net/play/423501/cae42b2e-d4c3-4fab-9513-e2986e1d762c',
+          title: 'Season 1, Episode 2'
+        },
+        3: {
+          url: 'https://iframe.mediadelivery.net/play/423501/bb0eda0a-4459-4fe5-ad8a-2f79efd702cc',
+          title: 'Season 1, Episode 3'
+        },
+        4: {
+          url: 'https://iframe.mediadelivery.net/play/423501/4cede6af-8158-4b3b-b90d-6ab231167738',
+          title: 'Season 1, Episode 4'
+        }
+        
+      },
+      2: { // Season 2
+        1: {
+          url: 'https://iframe.mediadelivery.net/play/423501/a6ce4db3-6228-4a27-b43f-bd53a7138ee0',
+          title: 'Season 2, Episode 1'
+        },
+        2: {
+          url: 'https://iframe.mediadelivery.net/play/423501/352594d3-ceb1-43e7-aad4-3acb8522cb22',
+          title: 'Season 2, Episode 2'
+        },
+        3: {
+          url: 'https://iframe.mediadelivery.net/play/423501/3fbdf147-f35f-4e22-ab7b-fdebbd352446',
+          title: 'Season 2, Episode 3'
+        },
+        4: {
+          url: 'https://iframe.mediadelivery.net/play/423501/80321dde-3a48-41b1-8d46-f0df30610ab2',
+          title: 'Season 2, Episode 4'
+        }
+      }
+    };
+    
+    // Current episode tracking
+    let currentSeason = 1;
+    let currentEpisode = 1;
+    
+    // Function to update episode navigation buttons state
+    function updateEpisodeNavigation(season, episode) {
+      season = parseInt(season);
+      episode = parseInt(episode);
+      
+      // Update current episode tracking
+      currentSeason = season;
+      currentEpisode = episode;
+      
+      // Update episode title display
+      document.getElementById('current-episode-title').textContent = episodeData[season][episode].title;
+      
+      // Update navigation buttons for season 1
+      const prevBtnS1 = document.getElementById('prev-episode-btn-s1');
+      const nextBtnS1 = document.getElementById('next-episode-btn-s1');
+      const prevBtnOverlayS1 = document.getElementById('prev-episode-btn-overlay-s1');
+      const nextBtnOverlayS1 = document.getElementById('next-episode-btn-overlay-s1');
+      
+      if (season === 1) {
+        // Previous button
+        if (episode <= 1) {
+          prevBtnS1.classList.add('disabled');
+          prevBtnOverlayS1.classList.add('disabled');
+        } else {
+          prevBtnS1.classList.remove('disabled');
+          prevBtnOverlayS1.classList.remove('disabled');
+        }
+        
+        // Next button
+        if (episode >= Object.keys(episodeData[1]).length) {
+          nextBtnS1.classList.add('disabled');
+          nextBtnOverlayS1.classList.add('disabled');
+        } else {
+          nextBtnS1.classList.remove('disabled');
+          nextBtnOverlayS1.classList.remove('disabled');
+        }
+      }
+      
+      // Update navigation buttons for season 2
+      const prevBtnS2 = document.getElementById('prev-episode-btn-s2');
+      const nextBtnS2 = document.getElementById('next-episode-btn-s2');
+      const prevBtnOverlayS2 = document.getElementById('prev-episode-btn-overlay-s2');
+      const nextBtnOverlayS2 = document.getElementById('next-episode-btn-overlay-s2');
+      
+      if (season === 2) {
+        // Previous button
+        if (episode <= 1) {
+          prevBtnS2.classList.add('disabled');
+          prevBtnOverlayS2.classList.add('disabled');
+        } else {
+          prevBtnS2.classList.remove('disabled');
+          prevBtnOverlayS2.classList.remove('disabled');
+        }
+        
+        // Next button
+        if (episode >= Object.keys(episodeData[2]).length) {
+          nextBtnS2.classList.add('disabled');
+          nextBtnOverlayS2.classList.add('disabled');
+        } else {
+          nextBtnS2.classList.remove('disabled');
+          nextBtnOverlayS2.classList.remove('disabled');
+        }
+      }
+    }
+    
+    // Function to change episode
+    function changeEpisode(season, episode) {
+      season = parseInt(season);
+      episode = parseInt(episode);
+      
+      // Validate episode number
+      if (!episodeData[season] || !episodeData[season][episode]) {
+        return;
+      }
+      
+      // Update iframe source
+      const iframe = document.getElementById(`season${season}-iframe`);
+      iframe.src = episodeData[season][episode].url;
+      
+      // Update navigation state
+      updateEpisodeNavigation(season, episode);
+      
+      // Scroll to video player
+      document.querySelector('.video-player-container').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Episode navigation button click handlers
+    document.getElementById('prev-episode-btn-s1').addEventListener('click', () => {
+      if (currentEpisode > 1) {
+        changeEpisode(1, currentEpisode - 1);
+      }
+    });
+    
+    document.getElementById('next-episode-btn-s1').addEventListener('click', () => {
+      if (currentEpisode < Object.keys(episodeData[1]).length) {
+        changeEpisode(1, currentEpisode + 1);
+      }
+    });
+    
+    document.getElementById('prev-episode-btn-s2').addEventListener('click', () => {
+      if (currentEpisode > 1) {
+        changeEpisode(2, currentEpisode - 1);
+      }
+    });
+    
+    document.getElementById('next-episode-btn-s2').addEventListener('click', () => {
+      if (currentEpisode < Object.keys(episodeData[2]).length) {
+        changeEpisode(2, currentEpisode + 1);
+      }
+    });
+    
+    // Player overlay controls
+    document.getElementById('prev-episode-btn-overlay-s1').addEventListener('click', () => {
+      if (currentEpisode > 1) {
+        changeEpisode(1, currentEpisode - 1);
+      }
+    });
+    
+    document.getElementById('next-episode-btn-overlay-s1').addEventListener('click', () => {
+      if (currentEpisode < Object.keys(episodeData[1]).length) {
+        changeEpisode(1, currentEpisode + 1);
+      }
+    });
+    
+    document.getElementById('prev-episode-btn-overlay-s2').addEventListener('click', () => {
+      if (currentEpisode > 1) {
+        changeEpisode(2, currentEpisode - 1);
+      }
+    });
+    
+    document.getElementById('next-episode-btn-overlay-s2').addEventListener('click', () => {
+      if (currentEpisode < Object.keys(episodeData[2]).length) {
+        changeEpisode(2, currentEpisode + 1);
+      }
+    });
+
+    // Episode click functionality - update the video player
+    const episodeCards = document.querySelectorAll('.episode-card');
+    
+    episodeCards.forEach(card => {
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const season = this.getAttribute('data-season');
+        const episode = this.getAttribute('data-episode');
+        
+        changeEpisode(season, episode);
+      });
+    });
+    
+    // Initialize episode navigation on page load
+    updateEpisodeNavigation(1, 1);
+  </script>
+</body>
+</html>

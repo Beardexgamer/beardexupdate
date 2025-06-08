@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anime Episode - BeardexAnime</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-color: #e50914;
+      --secondary-color: #6c5ce7;
+      --background-dark: #0f0f14;
+      --card-bg: #1a1a24;
+      --text-light: #f8f8f8;
+      --text-muted: #a0a0a0;
+    }
+    
+    body {
+      background-color: var(--background-dark);
+      color: var(--text-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 4px;
+    }
+    
+    /* Hero section with gradient overlay */
+    .hero-overlay {
+      background: linear-gradient(to top, var(--background-dark) 0%, rgba(15, 15, 20, 0.8) 50%, rgba(15, 15, 20, 0.6) 100%);
+    }
+    
+    /* Episode card animations */
+    .episode-card {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .episode-card:hover {
+      transform: scale(1.05);
+      z-index: 10;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Episode preview animation */
+    .episode-thumbnail {
+      transition: opacity 0.3s ease;
+    }
+    .episode-preview {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .episode-card:hover .episode-thumbnail {
+      opacity: 0;
+    }
+    .episode-card:hover .episode-preview {
+      opacity: 1;
+    }
+    
+    /* Episode info overlay */
+    .episode-info-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+      transform: translateY(0);
+      transition: transform 0.3s ease;
+    }
+    
+    /* Play button overlay */
+    .play-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .episode-card:hover .play-overlay {
+      opacity: 1;
+    }
+    
+    /* Progress bar */
+    .progress-bar {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 5;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-color);
+    }
+    
+    /* Rating stars */
+    .star-rating {
+      color: #ffc107;
+    }
+    .star-empty {
+      color: #555;
+    }
+    
+    /* Genre tags */
+    .genre-tag {
+      background-color: rgba(229, 9, 20, 0.2);
+      border: 1px solid rgba(229, 9, 20, 0.4);
+      color: #ff6b6b;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Buttons */
+    .primary-btn {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .primary-btn:hover {
+      background-color: #f40612;
+      transform: translateY(-2px);
+    }
+    .secondary-btn {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .secondary-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    /* Episode badge */
+    .episode-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 5;
+    }
+    
+    /* New episode badge */
+    .new-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 5;
+    }
+    
+    /* Duration badge */
+    .duration-badge {
+      position: absolute;
+      bottom: 40px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      z-index: 5;
+    }
+    
+    /* Section headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      position: relative;
+      padding-left: 0.75rem;
+    }
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    /* View all link */
+    .view-all {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+    .view-all:hover {
+      color: var(--primary-color);
+    }
+    .view-all i {
+      margin-left: 0.25rem;
+    }
+    
+    /* Info pills */
+    .info-pill {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    .info-pill i {
+      margin-right: 0.5rem;
+      color: var(--primary-color);
+    }
+    
+    /* Navigation */
+    .nav-link {
+      color: var(--text-muted);
+      transition: color 0.2s;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-light);
+    }
+    .nav-link.active {
+      position: relative;
+    }
+    .nav-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 2px;
+      background-color: var(--primary-color);
+      border-radius: 1px;
+    }
+    
+    /* Search results */
+    .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--card-bg);
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+    }
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background-color 0.2s;
+    }
+    .search-result-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    .search-result-item img {
+      width: 40px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 1rem;
+    }
+    
+    /* Video player */
+    .video-player {
+      position: relative;
+      width: 100%;
+      background-color: #000;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    
+    .video-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .video-player:hover .video-controls {
+      opacity: 1;
+    }
+    
+    .control-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background-color 0.2s;
+    }
+    
+    .control-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .video-progress {
+      flex-grow: 1;
+      height: 4px;
+      background-color: rgba(255, 255, 255, 0.2);
+      margin: 0 15px;
+      border-radius: 2px;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .progress-filled {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: var(--primary-color);
+      border-radius: 2px;
+      width: 30%;
+    }
+    
+    /* Episode list */
+    .episode-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    
+    .episode-item {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .episode-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .episode-thumbnail-container {
+      position: relative;
+      padding-top: 56.25%; /* 16:9 aspect ratio */
+    }
+    
+    .episode-thumbnail {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .episode-number {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .episode-duration {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    
+    .episode-info {
+      padding: 12px;
+    }
+    
+    .episode-title {
+      font-weight: bold;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .episode-date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    /* More like this section */
+    .more-like-this {
+      margin-top: 40px;
+    }
+    
+    .anime-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+    }
+    
+    .anime-card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .anime-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .anime-poster-container {
+      position: relative;
+      padding-top: 150%; /* 2:3 aspect ratio for posters */
+    }
+    
+    .anime-poster {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .anime-info {
+      padding: 12px;
+    }
+    
+    .anime-title {
+      font-weight: bold;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .anime-meta {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .anime-rating {
+      display: flex;
+      align-items: center;
+      margin-right: 8px;
+    }
+    
+    .anime-rating i {
+      color: #ffc107;
+      margin-right: 4px;
+      font-size: 10px;
+    }
+    
+    /* Episode navigation */
+    .episode-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+    }
+    
+    .nav-button {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    
+    .nav-button:hover {
+      background-color: var(--primary-color);
+    }
+    
+    .nav-button i {
+      margin-right: 8px;
+    }
+    
+    .nav-button.next i {
+      margin-right: 0;
+      margin-left: 8px;
+    }
+    
+    /* Comments section */
+    .comments-section {
+      margin-top: 40px;
+    }
+    
+    .comment {
+      display: flex;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .comment-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--card-bg);
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+    
+    .comment-content {
+      flex-grow: 1;
+    }
+    
+    .comment-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .comment-author {
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    
+    .comment-time {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .comment-text {
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    
+    .comment-actions {
+      display: flex;
+      align-items: center;
+    }
+    
+    .comment-action {
+      display: flex;
+      align-items: center;
+      margin-right: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    
+    .comment-action:hover {
+      color: var(--primary-color);
+    }
+    
+    .comment-action i {
+      margin-right: 4px;
+    }
+    
+    .comment-form {
+      margin-top: 20px;
+    }
+    
+    .comment-input {
+      width: 100%;
+      background-color: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      padding: 12px;
+      color: white;
+      resize: vertical;
+      min-height: 80px;
+    }
+    
+    .comment-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+    
+    .comment-submit {
+      margin-top: 12px;
+      padding: 8px 16px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .comment-submit:hover {
+      background-color: #f40612;
+    }
+    
+    /* Episode details */
+    .episode-details {
+      margin: 20px 0;
+    }
+    
+    .episode-description {
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .episode-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .meta-item {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    
+    .meta-item i {
+      margin-right: 8px;
+      color: var(--primary-color);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .episode-list {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      }
+      
+      .anime-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      }
+      
+      .video-controls {
+        padding: 10px;
+      }
+      
+      .control-btn {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="bg-opacity-90 bg-black backdrop-filter backdrop-blur-md fixed top-0 w-full z-50">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-8">
+          <a href="index.html" class="text-2xl font-bold text-red-600">BeardexAnime</a>
+          <nav class="hidden md:flex space-x-2">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Genres</a>
+            <a href="#" class="nav-link active">Popular</a>
+            <a href="#" class="nav-link">New Releases</a>
+          </nav>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <div class="relative hidden md:block">
+            <input type="text" id="searchInput" placeholder="Search anime..." class="bg-gray-800 bg-opacity-70 text-sm rounded-full py-1 px-4 pl-8 focus:outline-none focus:ring-1 focus:ring-red-500 w-48">
+            <i class="fas fa-search absolute left-3 top-2 text-gray-400 text-sm"></i>
+            
+            <!-- Search Results Dropdown -->
+            <div id="searchResults" class="search-results">
+              <!-- Search results will be populated here by JavaScript -->
+            </div>
+          </div>
+          <button class="text-gray-300 hover:text-white">
+            <i class="far fa-bell"></i>
+          </button>
+          <div class="relative">
+            <img src="https://api.dicebear.com/6.x/bottts/svg?seed=anime" alt="Profile" class="w-8 h-8 rounded-full">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="pt-16">
+    <div class="container mx-auto px-4 py-6">
+      <!-- Breadcrumb -->
+      <div class="text-sm text-gray-400 mb-4">
+        <a href="index.html" class="hover:text-red-500">Home</a> &gt; 
+        <a href="#" class="hover:text-red-500">Anime</a> &gt; 
+        <a href="#" class="hover:text-red-500">Demon Slayer</a> &gt; 
+        <span class="text-white">Episode 5</span>
+      </div>
+      
+      <!-- Video Player -->
+      <div class="video-player aspect-video mb-6">
+        <img src="https://vz-ef028a43-e92.b-cdn.net/bc45e7e9-f4df-4730-b9a5-c42c1eccc991/thumbnail.jpg" alt="Episode 5" class="w-full h-full object-cover">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <button class="w-20 h-20 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+            <i class="fas fa-play text-white text-2xl"></i>
+          </button>
+        </div>
+        <div class="video-controls">
+          <button class="control-btn">
+            <i class="fas fa-play"></i>
+          </button>
+          <div class="video-progress">
+            <div class="progress-filled"></div>
+          </div>
+          <button class="control-btn">
+            <i class="fas fa-volume-up"></i>
+          </button>
+          <button class="control-btn">
+            <i class="fas fa-expand"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Episode Navigation -->
+      <div class="episode-navigation">
+        <a href="#" class="nav-button">
+          <i class="fas fa-chevron-left"></i>
+          Previous Episode
+        </a>
+        <div class="flex space-x-2">
+          <button class="control-btn">
+            <i class="far fa-heart"></i>
+          </button>
+          <button class="control-btn">
+            <i class="fas fa-share-alt"></i>
+          </button>
+          <button class="control-btn">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <a href="#" class="nav-button next">
+          Next Episode
+          <i class="fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+      <!-- Episode Details -->
+      <div class="episode-details">
+        <h1 class="text-2xl font-bold mb-2">Demon Slayer: Entertainment District Arc</h1>
+        <h2 class="text-xl mb-4">Episode 5: Things Are Gonna Get Real Flashy!!</h2>
+        
+        <div class="episode-meta">
+          <div class="meta-item">
+            <i class="far fa-clock"></i>
+            <span>24:15</span>
+          </div>
+          <div class="meta-item">
+            <i class="far fa-calendar-alt"></i>
+            <span>January 2, 2022</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-closed-captioning"></i>
+            <span>CC</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-tv"></i>
+            <span>TV-14</span>
+          </div>
+        </div>
+        
+        <p class="episode-description">
+          Tanjiro and his friends accompany the Sound Hashira, Tengen Uzui, to an entertainment district where Tengen's female ninja agents have gone missing. They disguise themselves to investigate the mysterious disappearances, facing off against the demons of the district.
+        </p>
+        
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="genre-tag">Action</span>
+          <span class="genre-tag">Fantasy</span>
+          <span class="genre-tag">Supernatural</span>
+          <span class="genre-tag">Historical</span>
+        </div>
+      </div>
+      
+      <!-- Episodes List -->
+      <div class="mt-8">
+        <div class="section-header">
+          <h3 class="section-title">Episodes</h3>
+          <a href="#" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="episode-list">
+          <!-- Episode 1 -->
+          <a href="#" class="episode-item">
+            <div class="episode-thumbnail-container">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/92e3f94a-bab2-4174-b25f-4e0568abe5a6/thumbnail.jpg" alt="Episode 1" class="episode-thumbnail">
+              <div class="episode-number">EP 1</div>
+              <div class="episode-duration">24:38</div>
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%;"></div>
+              </div>
+            </div>
+            <div class="episode-info">
+              <div class="episode-title">Sound Hashira Tengen Uzui</div>
+              <div class="episode-date">Dec 5, 2021</div>
+            </div>
+          </a>
+          
+          <!-- Episode 2 -->
+          <a href="#" class="episode-item">
+            <div class="episode-thumbnail-container">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/798a16f4-390d-4b30-8dd0-b0d13d9c05e2/thumbnail.jpg" alt="Episode 2" class="episode-thumbnail">
+              <div class="episode-number">EP 2</div>
+              <div class="episode-duration">24:15</div>
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%;"></div>
+              </div>
+            </div>
+            <div class="episode-info">
+              <div class="episode-title">Infiltrating the Entertainment District</div>
+              <div class="episode-date">Dec 12, 2021</div>
+            </div>
+          </a>
+          
+          <!-- Episode 3 -->
+          <a href="#" class="episode-item">
+            <div class="episode-thumbnail-container">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/29e71fee-9ebb-48b8-8b56-3a04e9ce65c0/thumbnail.jpg" alt="Episode 3" class="episode-thumbnail">
+              <div class="episode-number">EP 3</div>
+              <div class="episode-duration">24:15</div>
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%;"></div>
+              </div>
+            </div>
+            <div class="episode-info">
+              <div class="episode-title">What Are You?</div>
+              <div class="episode-date">Dec 19, 2021</div>
+            </div>
+          </a>
+          
+          <!-- Episode 4 -->
+          <a href="#" class="episode-item">
+            <div class="episode-thumbnail-container">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/42a74362-f8ec-40b4-8c9a-a64d80c185fe/thumbnail.jpg" alt="Episode 4" class="episode-thumbnail">
+              <div class="episode-number">EP 4</div>
+              <div class="episode-duration">24:15</div>
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%;"></div>
+              </div>
+            </div>
+            <div class="episode-info">
+              <div class="episode-title">Tonight</div>
+              <div class="episode-date">Dec 26, 2021</div>
+            </div>
+          </a>
+          
+          <!-- Episode 5 (Current) -->
+          <a href="#" class="episode-item" style="border: 2px solid var(--primary-color);">
+            <div class="episode-thumbnail-container">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/bc45e7e9-f4df-4730-b9a5-c42c1eccc991/thumbnail.jpg" alt="Episode 5" class="episode-thumbnail">
+              <div class="episode-number">EP 5</div>
+              <div class="episode-duration">24:15</div>
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+            </div>
+            <div class="episode-info">
+              <div class="episode-title">Things Are Gonna Get Real Flashy!!</div>
+              <div class="episode-date">Jan 2, 2022</div>
+            </div>
+          </a>
+          
+          <!-- Episode 6 -->
+          <a href="#" class="episode-item">
+            <div class="episode-thumbnail-container">
+              <img src="https://vz-ef028a43-e92.b-cdn.net/bc45e7e9-f4df-4730-b9a5-c42c1eccc991/thumbnail.jpg" alt="Episode 6" class="episode-thumbnail">
+              <div class="episode-number">EP 6</div>
+              <div class="episode-duration">24:15</div>
+              <div class="new-badge">NEW</div>
+              <div class="play-overlay">
+                <div class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center border-2 border-white">
+                  <i class="fas fa-play text-white"></i>
+                </div>
+              </div>
+            </div>
+            <div class="episode-info">
+              <div class="episode-title">Layered Memories</div>
+              <div class="episode-date">Jan 9, 2022</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <!-- More Like This Section -->
+      <div class="more-like-this">
+        <div class="section-header">
+          <h3 class="section-title">More Like This</h3>
+          <a href="#" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="anime-grid">
+          <!-- Anime 1 -->
+          <a href="#" class="anime-card">
+            <div class="anime-poster-container">
+              <img src="https://upload.wikimedia.org/wikipedia/en/6/6d/Tokyo_Ghoul_volume_1_cover.jpg" alt="Tokyo Ghoul" class="anime-poster">
+            </div>
+            <div class="anime-info">
+              <div class="anime-title">Tokyo Ghoul</div>
+              <div class="anime-meta">
+                <div class="anime-rating">
+                  <i class="fas fa-star"></i>
+                  <span>8.2</span>
+                </div>
+                <span>24 Eps</span>
+              </div>
+            </div>
+          </a>
+          
+          <!-- Anime 2 -->
+          <a href="#" class="anime-card">
+            <div class="anime-poster-container">
+              <img src="https://upload.wikimedia.org/wikipedia/en/0/07/SteinsGate.jpg" alt="Steins;Gate" class="anime-poster">
+            </div>
+            <div class="anime-info">
+              <div class="anime-title">Steins;Gate</div>
+              <div class="anime-meta">
+                <div class="anime-rating">
+                  <i class="fas fa-star"></i>
+                  <span>9.1</span>
+                </div>
+                <span>24 Eps</span>
+              </div>
+            </div>
+          </a>
+          
+          <!-- Anime 3 -->
+          <a href="#" class="anime-card">
+            <div class="anime-poster-container">
+              <img src="https://upload.wikimedia.org/wikipedia/en/2/2d/OnePiece62Cover.png" alt="One Piece" class="anime-poster">
+            </div>
+            <div class="anime-info">
+              <div class="anime-title">One Piece</div>
+              <div class="anime-meta">
+                <div class="anime-rating">
+                  <i class="fas fa-star"></i>
+                  <span>8.9</span>
+                </div>
+                <span>1000+ Eps</span>
+              </div>
+            </div>
+          </a>
+          
+          <!-- Anime 4 -->
+          <a href="#" class="anime-card">
+            <div class="anime-poster-container">
+              <img src="https://upload.wikimedia.org/wikipedia/en/3/3e/Solo_Leveling_Anime_Key_Visual.jpg" alt="Solo Leveling" class="anime-poster">
+            </div>
+            <div class="anime-info">
+              <div class="anime-title">Solo Leveling</div>
+              <div class="anime-meta">
+                <div class="anime-rating">
+                  <i class="fas fa-star"></i>
+                  <span>8.7</span>
+                </div>
+                <span>12 Eps</span>
+              </div>
+            </div>
+          </a>
+          
+          <!-- Anime 5 -->
+          <a href="#" class="anime-card">
+            <div class="anime-poster-container">
+              <img src="https://upload.wikimedia.org/wikipedia/en/1/1e/Ranking_of_Kings_volume_1_cover.jpg" alt="Ranking of Kings" class="anime-poster">
+            </div>
+            <div class="anime-info">
+              <div class="anime-title">Ranking of Kings</div>
+              <div class="anime-meta">
+                <div class="anime-rating">
+                  <i class="fas fa-star"></i>
+                  <span>8.6</span>
+                </div>
+                <span>23 Eps</span>
+              </div>
+            </div>
+          </a>
+          
+          <!-- Anime 6 -->
+          <a href="#" class="anime-card">
+            <div class="anime-poster-container">
+              <img src="https://upload.wikimedia.org/wikipedia/en/3/3e/My_Dress-Up_Darling_volume_1_cover.jpg" alt="My Dress-Up Darling" class="anime-poster">
+            </div>
+            <div class="anime-info">
+              <div class="anime-title">My Dress-Up Darling</div>
+              <div class="anime-meta">
+                <div class="anime-rating">
+                  <i class="fas fa-star"></i>
+                  <span>8.1</span>
+                </div>
+                <span>12 Eps</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Comments Section -->
+      <div class="comments-section">
+        <div class="section-header">
+          <h3 class="section-title">Comments</h3>
+        </div>
+        
+        <div class="comment-form">
+          <textarea class="comment-input" placeholder="Add a comment..."></textarea>
+          <button class="comment-submit">Post Comment</button>
+        </div>
+        
+        <div class="comments-list mt-6">
+          <!-- Comment 1 -->
+          <div class="comment">
+            <div class="comment-avatar"></div>
+            <div class="comment-content">
+              <div class="comment-header">
+                <div class="comment-author">AnimeUser123</div>
+                <div class="comment-time">2 days ago</div>
+              </div>
+              <div class="comment-text">
+                This episode was amazing! The animation during the fight scenes was top-notch. Can't wait for the next episode!
+              </div>
+              <div class="comment-actions">
+                <div class="comment-action">
+                  <i class="far fa-heart"></i>
+                  <span>42</span>
+                </div>
+                <div class="comment-action">
+                  <i class="far fa-comment"></i>
+                  <span>Reply</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Comment 2 -->
+          <div class="comment">
+            <div class="comment-avatar"></div>
+            <div class="comment-content">
+              <div class="comment-header">
+                <div class="comment-author">OtakuFan99</div>
+                <div class="comment-time">1 week ago</div>
+              </div>
+              <div class="comment-text">
+                I can't wait for the next episode! The cliffhanger at the end was insane. Tengen is such a flashy character, I love his design and personality.
+              </div>
+              <div class="comment-actions">
+                <div class="comment-action">
+                  <i class="far fa-heart"></i>
+                  <span>28</span>
+                </div>
+                <div class="comment-action">
+                  <i class="far fa-comment"></i>
+                  <span>Reply</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Comment 3 -->
+          <div class="comment">
+            <div class="comment-avatar"></div>
+            <div class="comment-content">
+              <div class="comment-header">
+                <div class="comment-author">DemonSlayerFan</div>
+                <div class="comment-time">1 week ago</div>
+              </div>
+              <div class="comment-text">
+                The animation quality in this season is even better than the first one. Ufotable really outdid themselves with the Entertainment District Arc.
+              </div>
+              <div class="comment-actions">
+                <div class="comment-action">
+                  <i class="far fa-heart"></i>
+                  <span>15</span>
+                </div>
+                <div class="comment-action">
+                  <i class="far fa-comment"></i>
+                  <span>Reply</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <button class="w-full py-3 mt-4 bg-gray-800 hover:bg-gray-700 rounded-md text-center">
+          Load More Comments
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 py-8 mt-8">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <a href="index.html" class="text-xl font-bold text-red-600">BeardexAnime</a>
+          <p class="text-gray-500 text-sm mt-2">© 2024 BeardexAnime. All rights reserved.</p>
+        </div>
+        
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-white">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white">
+            <i class="fab fa-discord"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+        <div>
+          <h4 class="text-white font-bold mb-3 text-sm">About</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">About Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Contact</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Careers</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-bold mb-3 text-sm">Help</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">FAQ</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Devices</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Account</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-bold mb-3 text-sm">Legal</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Terms of Service</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Cookie Policy</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-bold mb-3 text-sm">Apps</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">iOS</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">Android</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-xs">TV Apps</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Anime list data for search functionality
+    const animeList = [
+      {
+        title: 'Demon Slayer',
+        image: 'https://vz-ef028a43-e92.b-cdn.net/bc45e7e9-f4df-4730-b9a5-c42c1eccc991/thumbnail.jpg',
+        link: 'episode.html',
+        category: ['Action', 'Supernatural', 'Historical'],
+        rating: 9.0
+      },
+      {
+        title: 'Tokyo Ghoul',
+        image: 'https://upload.wikimedia.org/wikipedia/en/6/6d/Tokyo_Ghoul_volume_1_cover.jpg',
+        link: '#',
+        category: ['Horror', 'Action', 'Supernatural'],
+        rating: 8.2
+      },
+      {
+        title: 'Steins;Gate',
+        image: 'https://upload.wikimedia.org/wikipedia/en/0/07/SteinsGate.jpg',
+        link: '#',
+        category: ['Sci-Fi', 'Thriller', 'Drama'],
+        rating: 9.1
+      },
+      {
+        title: 'One Piece',
+        image: 'https://upload.wikimedia.org/wikipedia/en/2/2d/OnePiece62Cover.png',
+        link: '#',
+        category: ['Action', 'Adventure', 'Comedy'],
+        rating: 8.9
+      },
+      {
+        title: 'Attack on Titan',
+        image: 'https://upload.wikimedia.org/wikipedia/en/9/93/Attack_on_Titan_volume_1_cover.jpg',
+        link: '#',
+        category: ['Action', 'Drama', 'Fantasy'],
+        rating: 9.3
+      },
+      {
+        title: 'My Hero Academia',
+        image: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Boku_no_Hero_Academia_Volume_1.png',
+        link: '#',
+        category: ['Action', 'Superhero', 'School'],
+        rating: 8.5
+      },
+      {
+        title: 'Jujutsu Kaisen',
+        image: 'https://upload.wikimedia.org/wikipedia/en/4/46/Jujutsu_kaisen.jpg',
+        link: '#',
+        category: ['Action', 'Supernatural', 'School'],
+        rating: 8.8
+      },
+      {
+        title: 'Solo Leveling',
+        image: 'https://upload.wikimedia.org/wikipedia/en/3/3e/Solo_Leveling_Anime_Key_Visual.jpg',
+        link: '#',
+        category: ['Action', 'Fantasy'],
+        rating: 8.7
+      },
+      {
+        title: 'Ranking of Kings',
+        image: 'https://upload.wikimedia.org/wikipedia/en/1/1e/Ranking_of_Kings_volume_1_cover.jpg',
+        link: '#',
+        category: ['Adventure', 'Fantasy', 'Drama'],
+        rating: 8.6
+      },
+      {
+        title: 'My Dress-Up Darling',
+        image: 'https://upload.wikimedia.org/wikipedia/en/3/3e/My_Dress-Up_Darling_volume_1_cover.jpg',
+        link: '#',
+        category: ['Romance', 'Slice of Life'],
+        rating: 8.1
+      },
+      {
+        title: 'Fullmetal Alchemist: Brotherhood',
+        image: 'https://upload.wikimedia.org/wikipedia/en/7/7e/Fullmetal_Alchemist_Brotherhood_key_visual.png',
+        link: '#',
+        category: ['Action', 'Adventure', 'Fantasy'],
+        rating: 9.2
+      },
+      {
+        title: 'Death Note',
+        image: 'https://upload.wikimedia.org/wikipedia/en/6/6f/Death_Note_Vol_1.jpg',
+        link: '#',
+        category: ['Thriller', 'Supernatural', 'Psychological'],
+        rating: 9.0
+      }
+    ];
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    searchInput.addEventListener('focus', () => {
+      if (searchResults.style.display !== 'block') {
+        searchResults.style.display = 'block';
+      }
+    });
+
+    // Close search results when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+        searchResults.style.display = 'none';
+      }
+    });
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+      
+      if (query === '') {
+        // Show all anime if no query
+        displaySearchResults(animeList);
+        return;
+      }
+
+      const filtered = animeList.filter(anime =>
+        anime.title.toLowerCase().includes(query) || 
+        anime.category.some(cat => cat.toLowerCase().includes(query))
+      );
+
+      displaySearchResults(filtered);
+    });
+
+    // Display search results
+    function displaySearchResults(results) {
+      if (results.length === 0) {
+        searchResults.innerHTML = `<div class="p-4 text-center text-gray-400">No anime found</div>`;
+      } else {
+        searchResults.innerHTML = results.map(anime => `
+          <a href="${anime.link}" class="search-result-item">
+            <img src="${anime.image}" alt="${anime.title}">
+            <div>
+              <div class="font-bold text-sm">${anime.title}</div>
+              <div class="text-xs text-gray-400">${anime.category.join(', ')}</div>
+              <div class="text-xs mt-1">
+                <span class="star-rating">
+                  <i class="fas fa-star"></i>
+                </span>
+                ${anime.rating}
+              </div>
+            </div>
+          </a>
+        `).join('');
+      }
+      
+      // Show search results
+      searchResults.style.display = 'block';
+    }
+
+    // Initialize search results on page load
+    displaySearchResults(animeList);
+  </script>
+</body>
+</html>
